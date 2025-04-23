@@ -42,6 +42,30 @@ Este projeto é um painel de tarefas com duas páginas:
 
 ---
 
+## ▶️ Como rodar o projeto
+
+1. Clone este repositório
+2. Instale as dependências com:
+
+```bash
+npm install
+```
+
+3. Adicione sua chave do Firebase:
+
+- Crie um arquivo chamado `serviceKey.json` na raiz do projeto.
+- Copie e cole o conteúdo da chave privada do Firebase (obtida no console do Firebase).
+
+4. Inicie o servidor com:
+
+```bash
+node server.js
+```
+
+5. Acesse `http://localhost:3000` no navegador.
+
+---
+
 ## 💡 Reflexões sobre o Projeto
 
 ### 1. Qual foi sua lógica para estruturar o projeto?
@@ -55,6 +79,7 @@ A parte mais desafiadora foi a integração do Firebase, especialmente o uso cor
 ### 3. O que faria diferente se tivesse mais tempo?
 
 - Modularizaria ainda mais o código, separando as responsabilidades em arquivos menores.
+- Adicionaria testes automatizados no backend para garantir estabilidade.
 - Melhoraria a interface visual com feedbacks claros ao usuário.
 - Permitiria autenticação de usuário para salvar tarefas por pessoa.
 
