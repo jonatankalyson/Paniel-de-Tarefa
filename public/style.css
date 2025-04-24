@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: whitesmoke;
+}
+
+p {
+  display: flex;
+  justify-content: center;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+ul {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 20px;
+}
+
+.header button {
+  position: absolute;
+  right: 18%;
+  margin-top: -30px;
+} 
+
+.header i {
+  font-size: 22px;
+} 
+
+.to-do {
+  margin-top: 40px;
+  width: 60%;
+}
+
+.textInsert {
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  width: 90%;
+}
+
+.divInsert {
+  padding: 10px;
+  background-color: lightgray;
+  border-radius: 10px;
+  display: flex;
+  box-shadow: 6px 5px 10px 0px grey;
+}
+
+.divSalvar{
+  display: flex;
+  padding: 10px;
+  background-color: lightgray;
+  border-radius: 10px;
+  display: flex;
+  box-shadow: 6px 5px 10px 0px grey;
+  cursor: pointer;
+
+
+}
+.divSalvar:hover{
+  background-color: blueviolet;
+}
+.divSalvar button{
+  margin: auto;
+}
+
+
+button {
+  width: 10%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.bx-plus {
+  font-size: 30px;
+  margin-left: 10px;
+  background-color: rgb(139, 14, 223);
+  border-radius: 50%;
+  padding: 5px;
+  color: white;
+}
+
+.divLi {
+  margin-top: 20px;
+  padding: 10px;
+  background: lightgray;
+  border-radius: 10px;
+  box-shadow: 6px 5px 10px 0px grey;
+  display: flex;
+  align-items: center;
+}
+
+.divLi span {
+  width: 80%;
+  color: dimgray;
+}
+
+.divLi input {
+  width: 10%;
+  outline: none;
+  accent-color: currentcolor;
+}
+
+.divLi i {
+  font-size: 22px;
+  color: brown;
+}
+
+li {
+  list-style-type: none;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.nova-tarefa{
+ display: flex;
+justify-content: right;
+}
+.searchBox {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #ccc;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchBox div{
+  
+ 
+
+  
+}
+.searchBox input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  
+}
+
+.divInsert input.descInsert {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.divLi.concluida {
+  background-color: #c6f6c6;
+}
+
+.divLi.vencida {
+  background-color: #f6c6c6; /* vermelho claro */
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.filtros button {
+  padding: 6px 12px;
+  background-color: #ddd;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filtros button:hover {
+  background-color: #ccc;
+}
+
+
+.subtarefas-container {
+  margin-top: 10px;
+  margin-left: 30px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+
+.subtarefa-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+
+.subtarefa-item span {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+
+.subtarefa-item button {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+.subtarefa-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.subtarefa-form input {
+  flex-grow: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.subtarefa-form button {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.subtarefa-form button:hover {
+  background-color: #5a32a3;
+}
+
+
+.subtarefa-concluida {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+
+@media (max-width: 775px) {
+  input {
+    width: 70%;
+  }
+
+  .divInsert button {
+    width: 30%;
+  }
+
+  i {
+    font-size: 30px;
+    padding: 0px;
+  }
+
+  p {
+    font-size: x-large;
+  }
+}

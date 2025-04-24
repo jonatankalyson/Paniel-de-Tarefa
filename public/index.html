@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="to-do">
+    <div class="header">
+      <p>Lista de Tarefas</p>
+      <button id="btnDeleteAll"><i class='bx bxs-trash-alt'></i></button>
+    </div>
+
+    <hr />
+
+    <div class="searchBox">
+      <input class="search-input" type="text" placeholder="Buscar tarefa pelo título..." />
+      <a href="cadastro.html"><button><i class='bx bx-plus'></i></button></a>
+    </div>
+
+    <div class="filtros">
+      <button onclick="setFiltro('todas')">Todas</button>
+      <button onclick="setFiltro('pendentes')">Pendentes</button>
+      <button onclick="setFiltro('concluidas')">Concluídas</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const searchInput = document.querySelector('.search-input');
+    const btnDeleteAll = document.getElementById('btnDeleteAll');
+    const taskList = document.getElementById('taskList');
+    let filtroAtual = 'todas';
+    let itensDB = [];
+
+    btnDeleteAll.onclick = () => { itensDB = []; updateDB(); };
+    searchInput.addEventListener('input', () => loadItens(searchInput.value));
+
+    function setFiltro(filtro) {
+      filtroAtual = filtro;
+      loadItens(searchInput.value);
+    }
+
+    function updateDB() {
+      localStorage.setItem('todolist', JSON.stringify(itensDB));
+      loadItens(searchInput.value);
+    }
+
+    function loadItens(filtroBusca = "") {
+      taskList.innerHTML = '';
+      itensDB = JSON.parse(localStorage.getItem('todolist')) || [];
+
+      itensDB.forEach((item, i) => {
+        const tituloMatch = item.item.toLowerCase().includes(filtroBusca.toLowerCase());
+        const filtroCond =
+          filtroAtual === 'todas' ||
+          (filtroAtual === 'pendentes' && item.status !== 'checked') ||
+          (filtroAtual === 'concluidas' && item.status === 'checked');
+
+        if (tituloMatch && filtroCond) {
+          insertItemTela(item, i);
+        }
+      });
+
+      attachCardClick();
+    }
+
+    function insertItemTela(item, i) {
+      const hoje = new Date().toISOString().split('T')[0];
+      const atrasada = item.data && item.data < hoje && item.status !== 'checked';
+      const classes = ['divLi', item.status === 'checked' ? 'concluida' : '', atrasada ? 'vencida' : '']
+        .filter(c => c).join(' ');
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div class="${classes}">
+          <input type="checkbox" ${item.status} data-i="${i}" class="task-checkbox" />
+          <span><strong>${item.item}</strong><br/><small>${item.descricao}</small><br/><small><i class='bx bx-calendar'></i> ${item.data}</small></span>
+          <button data-i="${i}" class="btn-remove"><i class='bx bx-trash'></i></button>
+        </div>
+        <div class="subtarefas" id="subtarefas-${i}" style="display:none;">
+          <div class="subtarefas-container">
+            ${(item.subtarefas||[]).map((st,j) => `
+              <div class="subtarefa-item">
+                <input type="checkbox" ${st.status} data-i="${i}" data-j="${j}" class="sub-checkbox" />
+                <span class="${st.status==='checked'?'subtarefa-concluida':''}">${st.titulo}</span>
+                <button data-i="${i}" data-j="${j}" class="btn-rem-sub"> <i class='bx bx-trash'></i> </button>
+              </div>
+            `).join('')}
+            <div class="subtarefa-form">
+              <input type="text" placeholder="Nova subtarefa" id="input-sub-${i}" />
+              <button data-i="${i}" class="btn-add-sub"> <i class='bx bx-plus'></i> </button>
+            </div>
+          </div>
+        </div>
+      `;
+      taskList.appendChild(li);
+    }
+
+   
+    function attachCardClick() {
+      taskList.querySelectorAll('.divLi').forEach(div => {
+        div.removeEventListener('click', cardClick);
+        div.addEventListener('click', cardClick);
+      });
+    }
+
+    function cardClick(e) {
+      // ignore clicks on checkbox or remove buttons
+      if (e.target.closest('.task-checkbox') || e.target.closest('.btn-remove')) return;
+      const i = +e.currentTarget.querySelector('.task-checkbox').dataset.i;
+      const subDiv = document.getElementById(`subtarefas-${i}`);
+      subDiv.style.display = subDiv.style.display === 'none' ? 'block' : 'none';
+    }
+
+    
+    taskList.addEventListener('change', e => {
+      if (e.target.classList.contains('task-checkbox')) {
+        const i = +e.target.dataset.i;
+        itensDB[i].status = e.target.checked ? 'checked' : '';
+        updateDB();
+      }
+      if (e.target.classList.contains('sub-checkbox')) {
+        const i = +e.target.dataset.i;
+        const j = +e.target.dataset.j;
+        itensDB[i].subtarefas[j].status = e.target.checked ? 'checked' : '';
+        updateDB();
+      }
+    });
+
+    taskList.addEventListener('click', e => {
+     
+      if (e.target.closest('.btn-remove')) {
+        const i = +e.target.closest('.btn-remove').dataset.i;
+        itensDB.splice(i,1);
+        updateDB();
+      }
+    
+      if (e.target.closest('.btn-add-sub')) {
+        const i = +e.target.closest('.btn-add-sub').dataset.i;
+        const input = document.getElementById(`input-sub-${i}`);
+        const txt = input.value.trim(); if(!txt) return;
+        itensDB[i].subtarefas = itensDB[i].subtarefas||[];
+        itensDB[i].subtarefas.push({titulo:txt,status:''});
+        updateDB();
+      }
+     
+      if (e.target.closest('.btn-rem-sub')) {
+        const btn = e.target.closest('.btn-rem-sub');
+        const i = +btn.dataset.i, j = +btn.dataset.j;
+        itensDB[i].subtarefas.splice(j,1);
+        updateDB();
+      }
+    });
+
+    loadItens();
+  </script>
+</body>
+</html>

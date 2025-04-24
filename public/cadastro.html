@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastrar Tarefa</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="to-do">
+    <div class="header">
+      <p>Cadastrar Tarefa</p>
+    </div>
+    <hr />
+    <br />
+    <div class="divInsert">
+      <input type="text" id="titulo" placeholder="Título da Tarefa" class="textInsert" />
+    </div>
+    <br />
+    <div class="divInsert">
+      <input type="text" id="descricao" placeholder="Descrição da Tarefa" class="textInsert" />
+    </div>
+    <br />
+    <div class="divInsert">
+      <input type="date" id="data" class="textInsert" />
+    </div>
+    <br />
+    <div class="divSalvar" onclick="salvarTarefa()">
+      <button><i class='bx bx-save'></i> Salvar</button>
+    </div>
+  </div>
+
+  <script>
+    function salvarTarefa() {
+      const titulo = document.getElementById('titulo').value.trim()
+      const descricao = document.getElementById('descricao').value.trim()
+      const data = document.getElementById('data').value
+      if (!titulo || !descricao || !data) {
+        alert("Preencha todos os campos")
+        return
+      }
+
+      let itensDB = JSON.parse(localStorage.getItem('todolist')) ?? []
+
+      if (itensDB.length >= 20) {
+        alert("Limite máximo de 20 tarefas atingido!")
+        return
+      }
+
+      itensDB.push({ item: titulo, descricao: descricao, data: data, status: '' })
+      localStorage.setItem('todolist', JSON.stringify(itensDB))
+      alert("Tarefa salva com sucesso!")
+      window.location.href = 'index.html'
+    }
+  </script>
+</body>
+</html>
