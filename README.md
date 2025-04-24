@@ -49,8 +49,8 @@ Este projeto é um painel de tarefas com duas páginas:
    npm install
    ```
 3. Adicione sua chave do Firebase:
-   - Crie um arquivo chamado `serviceKey.json` na raiz do projeto.
    - Copie e cole o conteúdo da chave privada do Firebase (obtida no console do Firebase).
+   - Adicione no arquivo chamado `serviceKey.json` a chave gerada no firabase (obtida no console do Firebase) na raiz do projeto.
 4. Inicie o servidor com:
    ```bash
    node server.js
